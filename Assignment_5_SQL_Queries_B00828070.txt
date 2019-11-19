@@ -1,0 +1,10 @@
+1) select customers.customerName from customers inner join employees ON customers.salesRepEmployeeNumber = employees.employeeNumber where customers.city not in  (select offices.city from employees INNER JOIN offices ON employees.officeCode = offices.officeCode where employees.jobTitle ="Sales Rep");
+
+2) select DISTINCT orderNumber from orderdetails INNER JOIN products ON orderdetails.productCode = products.productCode where orderdetails.priceEach < products.MSRP ;
+
+3) select products.productName, AVG((orderdetails.priceEach - products.buyPrice )/products.buyPrice * 100) as Top_Products from orderdetails INNER JOIN products ON products.productCode = orderdetails.productCode inner join orders ON orders.orderNumber = orderdetails.orderNumber where year(orders.orderDate) ="2004"  group by products.productName order by Top_Products  DESC limit 5 ; 
+
+4) 
+
+5) select officeCode, avg(datediff(orders.shippedDate,orders.orderDate)) as Avg_Time
+from (orders inner join orderdetails ON orderdetails.orderNumber = orders.orderNumber inner join customers on orders.customerNumber = customers.customerNumber inner join employees on customers.salesRepEmployeeNumber = employees.employeeNumber) where year(orders.orderDate) = "2005" group by employees.officeCode;
